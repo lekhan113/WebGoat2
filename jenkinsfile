@@ -21,7 +21,7 @@ pipeline {
         stage("build & SonarQube analysis") {
             steps {
                 sh 'mvn clean package sonar:sonar'
-                -Dsonar.host.url=http://192.168.72.132:9000 \ 
+                -Dsonar.host.url="http://192.168.72.132:9000" \ 
                 -Dsonar.token= squ_23b7a51412befc2d4c087931b7614b9808b4f27d
             }
           }
