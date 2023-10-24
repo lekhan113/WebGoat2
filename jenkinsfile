@@ -27,25 +27,22 @@ pipeline {
             jdk = tool name: 'jdk21'
             javahome = "/var/jenkins_home/tools/hudson.model.JDK/jdk21/jdk-21.0.1"
         }
-            steps {
-                withSonarQubeEnv(installationName: 'SonarQube') {
-                    sh 'mvn sonar:sonar'
-     
-                    withEnv(["JAVA_HOME=/var/jenkins_home/tools/hudson.model.JDK/jdk21/jdk-21.0.1/","PATH+JAVA=/var/jenkins_home/tools/hudson.model.JDK/jdk21/jdk-21.0.1/bin"]) {
-                        
-                        // note that simple quote strings are not evaluated by Groovy
-                        // substitution is done by shell script using environment
-                        sh '$JAVA_HOME/bin/java -version'
-                        sh 'mvn clean package'
-                        sh 'mvn sonar:sonar sonar.projectKey=webgoat25 \
-                        -Dsonar.projectName=webgoat25 \
-                        -Dsonar.projectVersion=1.0 \
-                        -Dsonar.language=java \
-                        -Dsonar.java.binaries=./target/classes \
-                        -Dsonar.exclusions=**/*.ts \
-                        -Dsonar.host.url=http://192.168.72.132:9000 \
-                        -Dsonar.login=squ_a1305ac7fc2b4a55879f4b333be4ce5cc44ed8fc'
-                    }
+            steps {     
+                withEnv(["JAVA_HOME=/var/jenkins_home/tools/hudson.model.JDK/jdk21/jdk-21.0.1/","PATH+JAVA=/var/jenkins_home/tools/hudson.model.JDK/jdk21/jdk-21.0.1/bin"]) {
+                    
+                    // note that simple quote strings are not evaluated by Groovy
+                    // substitution is done by shell script using environment
+                    sh '$JAVA_HOME/bin/java -version'
+                    sh 'mvn clean package'
+                    sh 'mvn sonar:sonar sonar.projectKey=webgoat25 \
+                    -Dsonar.projectName=webgoat25 \
+                    -Dsonar.projectVersion=1.0 \
+                    -Dsonar.language=java \
+                    -Dsonar.java.binaries=./target/classes \
+                    -Dsonar.exclusions=**/*.ts \
+                    -Dsonar.host.url=http://192.168.72.132:9000 \
+                    -Dsonar.login=squ_a1305ac7fc2b4a55879f4b333be4ce5cc44ed8fc'
+                }
                 }
                 timeout(time: 60, unit: 'MINUTES') {
                     waitForQualityGate abortPipeline: true
