@@ -37,7 +37,7 @@ pipeline {
                         // substitution is done by shell script using environment
                         sh '$JAVA_HOME/bin/java -version'
                         sh 'mvn clean package'
-                        sh 'mvn sonar:sonar -Dsonar.projectKey=Project_Backend -Dsonar.host.url=http://192.168.72.132:9000 -Dsonar.login=squ_a1305ac7fc2b4a55879f4b333be4ce5cc44ed8fc'
+                        sh 'mvn sonar:sonar -Dsonar.host.url=http://192.168.72.132:9000 -Dsonar.login=squ_a1305ac7fc2b4a55879f4b333be4ce5cc44ed8fc'
                     }
                 }
                 timeout(time: 60, unit: 'MINUTES') {
