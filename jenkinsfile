@@ -22,11 +22,11 @@ pipeline {
             tools {
                 jdk "jdk21" // the name you have given the JDK installation using the JDK manager (Global Tool Configuration)
             }
-        environment {
-            scannerHome = tool 'SonarQube' // the name you have given the Sonar Scanner (Global Tool Configuration)
-            jdk = tool name: 'jdk21'
-            javahome = "/var/jenkins_home/tools/hudson.model.JDK/jdk21/jdk-21.0.1"
-        }
+            environment {
+                scannerHome = tool 'SonarQube' // the name you have given the Sonar Scanner (Global Tool Configuration)
+                jdk = tool name: 'jdk21'
+                javahome = "/var/jenkins_home/tools/hudson.model.JDK/jdk21/jdk-21.0.1"
+            }
             steps {     
                 withEnv(["JAVA_HOME=/var/jenkins_home/tools/hudson.model.JDK/jdk21/jdk-21.0.1/","PATH+JAVA=/var/jenkins_home/tools/hudson.model.JDK/jdk21/jdk-21.0.1/bin"]) {
                     
