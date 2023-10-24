@@ -16,29 +16,11 @@ pipeline {
           }
         }
 
-
-
-        stage('SonarQube analysis') {
-            tools {
-                jdk "jdk21" // the name you have given the JDK installation using the JDK manager (Global Tool Configuration)
-            }
-            environment {
-                scannerHome = tool 'SonarQube' // the name you have given the Sonar Scanner (Global Tool Configuration)
-                jdk = tool name: 'jdk21'
-                javahome = "/var/jenkins_home/tools/hudson.model.JDK/jdk21/jdk-21.0.1"
-            }
-            steps {     
-                withEnv(["JAVA_HOME=/var/jenkins_home/tools/hudson.model.JDK/jdk21/jdk-21.0.1/","PATH+JAVA=/var/jenkins_home/tools/hudson.model.JDK/jdk21/jdk-21.0.1/bin"]) {  
-                // note that simple quote strings are not evaluated by Groovy
-                // substitution is done by shell script using environment
-                sh '$JAVA_HOME/bin/java -version'
-                sh 'mvn clean package'
-                sh 'mvn sonar:sonar sonar.projectKey=webgoat25 \
-                -Dsonar.host.url=http://192.168.72.132:9000 \
-                -Dsonar.login=squ_a1305ac7fc2b4a55879f4b333be4ce5cc44ed8fc'
-                }
-                timeout(time: 60, unit: 'MINUTES') {
-                    waitForQualityGate abortPipeline: true
+        stage('Run SonarQube Analysis') {
+            steps {
+                script {
+                    def mavenHome = tool name: 'maven', type: 'Maven'
+                    sh "${mavenHome}/bin/mvn sonar:sonar -Dsonar.projectKey=webgoat25 -Dsonar.host.url=http://192.168.72.132:9000 -Dsonar.login=squ_a1305ac7fc2b4a55879f4b333be4ce5cc44ed8fc"
                 }
             }
         }
