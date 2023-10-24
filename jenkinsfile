@@ -29,7 +29,7 @@ pipeline {
         }
             steps {
                 withSonarQubeEnv(installationName: 'SonarQube') {
-    //                sh 'mvn sonar:sonar'
+                    sh 'mvn sonar:sonar'
      
                     withEnv(["JAVA_HOME=/var/jenkins_home/tools/hudson.model.JDK/jdk21/jdk-21.0.1/","PATH+JAVA=/var/jenkins_home/tools/hudson.model.JDK/jdk21/jdk-21.0.1/bin"]) {
                         
@@ -44,5 +44,6 @@ pipeline {
                     waitForQualityGate abortPipeline: true
                 }
             }
+        }
     }
 }
