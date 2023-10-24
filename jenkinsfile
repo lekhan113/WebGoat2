@@ -42,10 +42,10 @@ pipeline {
                 -Dsonar.host.url=http://192.168.72.132:9000 \
                 -Dsonar.login=squ_a1305ac7fc2b4a55879f4b333be4ce5cc44ed8fc'
                 }
-                }
                 timeout(time: 60, unit: 'MINUTES') {
                     waitForQualityGate abortPipeline: true
                 }
             }
         }
     }
+}
